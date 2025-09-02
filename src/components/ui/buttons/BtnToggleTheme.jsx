@@ -5,13 +5,15 @@ export const BtnToggleTheme = () => {
 
     return (
         <button
-            className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-primary/20 transition-all justify-center cursor-pointer"
+            className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-primary/20 transition-all justify-start cursor-pointer"
             onClick={setTheme}
         >
-            <span>
+            <span
+            className="hidden sm:block">
                 {theme === "light" ? "☀️" : "🌙"}
             </span>
-            <span>
+            <span
+            className="hidden sm:block">
                 {theme === "light" ? "Light Mode" : "Dark Mode"}
             </span>
         </button>

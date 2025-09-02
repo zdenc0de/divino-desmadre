@@ -1,76 +1,86 @@
 import { Icon } from "@iconify/react/dist/iconify.js"
 import { NavLink } from "react-router-dom"
 import { BtnToggleTheme } from "../ui/buttons/BtnToggleTheme"
+import { BtnLogout } from "../ui/buttons/BtnLogout"
+import { BtnNewPost } from "../ui/buttons/BtnNewPost"
 
 export const Sidebar = () => {
     const links = [
         {
-            label:"Inicio", 
+            label: "Inicio",
             icon: "ion:home",
-            to:"/",
+            to: "/",
         },
         {
-            label:"Notificaciones", 
+            label: "Notificaciones",
             icon: "ion:notifications", // Checar
-            to:"/notificaciones",
+            to: "/notificaciones",
         },
         {
-            label:"Mensajes", 
+            label: "Mensajes",
             icon: "ion:chatbubbles",
-            to:"/mensajes",
+            to: "/mensajes",
         },
         {
-            label:"Colecciones", 
+            label: "Colecciones",
             icon: "ic:baseline-collections-bookmark",
-            to:"/colecciones",
+            to: "/colecciones",
         },
         {
-            label:"Suscripciones", 
+            label: "Suscripciones",
             icon: "ic:baseline-person",
-            to:"/suscripciones",
+            to: "/suscripciones",
         },
         {
-            label:"Añadir Tarjeta", 
+            label: "Añadir Tarjeta",
             icon: "ic:baseline-credit-card",
-            to:"/tarjeta",
+            to: "/tarjeta",
         },
         {
-            label:"Mi perfil", 
+            label: "Mi perfil",
             icon: "ic:baseline-account-circle",
-            to:"/miperfil",
+            to: "/miperfil",
         },
     ]
     return (
-        <div
-        className="h-screen p-2 bg-white dark:bg-bg-dark transition-all duration-300">
+        <div 
+        className="h-screen p-2 bg-white dark:bg-bg-dark transition-all duration-300 flex flex-col">
             {
                 /* Logo */
             }
-            <div
-            className="">
-                ONLYDEVS
-            </div>
-            {links.map((item, index) => {
-                return (
-                    <NavLink key={index} to={item.to} 
-                    className={({isActive}) => `flex items-center gap-3 p-2 rounded-lg font-semibold hover:bg-gray-100 dark:hover:bg-primary/10 dark:hover:text-primary transition-all w-full justify-start
-                    ${
-                        isActive 
-                        ? "text-blue-600 dark:text-white" 
-                        : "text-gray-600 dark:text-gray-400"
-                    }`} >
-                    <Icon icon={item.icon} width = {24} height={24} />
-                    <span>
-                        {item.label}
-                    </span>
-                    </NavLink>
-                )
-            })}
-            <nav
+            <div 
+            className="flex justify-center items-center h-8 w-8 rounded-full bg-blue-100 text-primary font-bold text-xs m-2">
+                OD
+            </div>  
+            <nav 
             className="flex-1 flex flex-col gap-2 items-center">
-
+                {links.map((item, index) => {
+                    return (
+                        <NavLink
+                            key={index}
+                            to={item.to}
+                            className={({ isActive }) =>
+                                `flex items-center gap-3 p-2 rounded-lg font-semibold hover:bg-gray-100 dark:hover:bg-primary/10 dark:hover:text-primary transition-all w-full justify-start
+                                ${
+                                    isActive
+                                        ? "text-blue-600 dark:text-white"
+                                        : "text-gray-600 dark:text-gray-400"
+                                }`
+                            }
+                        >
+                            <Icon 
+                            icon={item.icon} width={24} height={24} />
+                            <span 
+                            className="hidden sm:block">
+                                {item.label}
+                            </span>
+                        </NavLink>
+                    )
+                })}
             </nav>
             <BtnToggleTheme />
+            <BtnLogout />
+            <BtnNewPost />
         </div>
     )
 }
