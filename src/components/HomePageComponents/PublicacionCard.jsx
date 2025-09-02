@@ -1,4 +1,5 @@
 import { Icon } from "@iconify/react/dist/iconify.js"
+import { PostImageFrame } from "./PostImageFrame"
 
 export const PublicacionCard = () => {
     return (
@@ -27,6 +28,16 @@ export const PublicacionCard = () => {
                         icon="mdi:dots-horizontal" 
                         className="text-gray-500" />
                     </button>
+                   </div>
+               </div>
+               <div
+               className="mt-3">
+                   <p
+                   className="mb-2">
+                       saludame porras
+                   </p>
+                   <div>
+                    <PostImageFrame />
                    </div>
                </div>
         </div>
