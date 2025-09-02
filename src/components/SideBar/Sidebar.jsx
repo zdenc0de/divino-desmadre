@@ -1,5 +1,6 @@
 import { Icon } from "@iconify/react/dist/iconify.js"
 import { NavLink } from "react-router-dom"
+import { BtnToggleTheme } from "../ui/buttons/BtnToggleTheme"
 
 export const Sidebar = () => {
     const links = [
@@ -69,6 +70,7 @@ export const Sidebar = () => {
             className="flex-1 flex flex-col gap-2 items-center">
 
             </nav>
+            <BtnToggleTheme />
         </div>
     )
 }
