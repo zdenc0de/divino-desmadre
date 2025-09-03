@@ -37,7 +37,7 @@ export const PublicacionCard = () => {
                        saludame porras
                    </p>
                    <div>
-                    <PostImageFrame />
+                    <PostImageFrame src={"https://tse1.mm.bing.net/th/id/OIP.GKq_s07K8lmVurS7GwVAvAHaJj?cb=thfc1&w=735&h=948&rs=1&pid=ImgDetMain&o=7&rm=3"} />
                    </div>
                </div>
         </div>
