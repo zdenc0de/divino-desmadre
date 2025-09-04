@@ -1,12 +1,21 @@
 import { Icon } from "@iconify/react/dist/iconify.js"
 import logo from "../assets/logoy2k.png"
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useGenerarCodigosAleatorios } from "../hooks/useGenerarCodigosAleatorios";
+import { useAuthStore } from "../store/AuthStore";
+import { set } from "react-hook-form";
 
 export const LoginPage = () => {
     const [showPassword, setShowPassword] = useState(false);
+    const { setCredenciales } = useAuthStore();
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     }
+    useEffect(() => {
+        const response = useGenerarCodigosAleatorios();
+        const correoCompleto = response+"gmail.com";
+        setCredenciales({email:correoCompleto, password:response})
+    }, [])
 
     return (
         <main
@@ -70,10 +79,12 @@ export const LoginPage = () => {
                         className=" mb-4 relative">
                             <input
                             placeholder="Contraseña"
-                            className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4F46E5]" />
+                            type={showPassword ? "text" : "password"}
+                            className="w-full px-4 py-3 pr-12 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4F46E5] [&::-ms-reveal]:hidden [&::-ms-clear]:hidden [&::-webkit-textfield-decoration-container]:hidden"
+                            autoComplete="current-password" />
                             <button
                             type="button"
-                            className="absolute top-1/2 -translate-y-1/2 right-3 text-gray-500 cursor-pointer"
+                            className="absolute top-1/2 -translate-y-1/2 right-3 text-gray-500 cursor-pointer z-10"
                             onClick={togglePasswordVisibility}>
                                 <Icon 
                                 icon = {showPassword?"mdi:eye-off":"mdi:eye"}/>

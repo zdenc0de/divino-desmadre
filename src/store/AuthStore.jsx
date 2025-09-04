@@ -6,8 +6,9 @@ export const useAuthStore = create((set) => ({
         const {data} = await supabase.auth.signUp({
             credenciales:null, 
             setCredenciales : () => set({credenciales: p}),
-            email: "",
-            password: ""
+            email: p.email,
+            password: p.password
         })
+        return data.user
     }
 }))
