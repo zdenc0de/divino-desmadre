@@ -23,9 +23,9 @@ export const LoginPage = () => {
                         alt="Logo" />
                         <span
                         className="text-4xl font-bold text-[#06068e]">
-                            Only<span
+                            divino<span
                             className="text-[white]">
-                                Devs
+                                desmadre
                             </span>
                         </span>
                     </div >
@@ -33,15 +33,19 @@ export const LoginPage = () => {
                     className="flex flex-col">
                         <span
                     className="text-3xl font-semibold">
-                        saludame chars
+                        how many
                     </span>
                     <span
                     className="text-3xl font-semibold">
-                        saludame hp
+                        times do I have
                     </span>
                     <span
                     className="text-3xl font-semibold">
-                        saludame ivan
+                        to say were not enemies
+                    </span>
+                    <span
+                    className="text-3xl font-semibold text-black">
+                        ????????
                     </span>
                     </div>
                 </div>
@@ -63,7 +67,7 @@ export const LoginPage = () => {
                             className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4F46E5]" />
                         </div>
                         <div
-                        className="relative">
+                        className=" mb-4 relative">
                             <input
                             placeholder="Contraseña"
                             className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4F46E5]" />
@@ -75,8 +79,29 @@ export const LoginPage = () => {
                                 icon = {showPassword?"mdi:eye-off":"mdi:eye"}/>
                             </button>
                         </div>
-                        
+                        <button
+                        type="submit"
+                        className="w-full font-bold bg-[#4F46E5] text-white py-3 rounded-lg hover:bg-[#3730a3] transition-colors mb-4">
+                            INICIAR SESIÓN
+                        </button>
                     </form>
+                    <div
+                    className="mt-4 text-xs text-gray-500 text-center">
+                        Al iniciar sesión, aceptas nuestras <span className="text-blue-500 cursor-pointer">Condiciones</span>, la <span className="text-blue-500 cursor-pointer">Política de datos</span> y la <span className="text-blue-500 cursor-pointer">Política de cookies</span>.
+                        <a href="#" className="text-blue-500 cursor-pointer"> Más información</a>
+                    </div>
+                    <div
+                    className="mt-6 text-center">
+                        ¿Olvidaste tu contraseña? <a href="#" className="text-blue-500 font-semibold cursor-pointer">Recuperar contraseña</a>
+                        <div
+                        className="mt-6 text-center">
+                        ¿No tienes una cuenta? <a href="#" className="text-blue-500 font-semibold cursor-pointer">Regístrate</a>
+                        </div>
+                    </div>
+                    <div
+                    className="mt-6 text-center text-gray-400 text-sm">
+                        &copy; 2025 zdenc0de. Todos los derechos reservados.
+                    </div>
                 </div>
             </section>
         </main>

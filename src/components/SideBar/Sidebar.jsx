@@ -49,8 +49,8 @@ export const Sidebar = () => {
                 /* Logo */
             }
             <div 
-            className="flex justify-center items-center h-8 w-8 rounded-full bg-blue-100 text-primary font-bold text-xs m-2">
-                OD
+            className="flex justify-center items-center h-8 w-8 rounded-full bg-primary text-white font-bold text-xs m-2">
+                DD
             </div>  
             <nav 
             className="flex-1 flex flex-col gap-2 items-center">
