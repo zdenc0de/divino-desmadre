@@ -79,7 +79,8 @@ export const Sidebar = () => {
                 })}
             </nav>
             <BtnToggleTheme />
-            <BtnLogout />
+            <BtnLogout 
+            />
             <BtnNewPost />
         </div>
     )

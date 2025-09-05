@@ -22,7 +22,10 @@ export const useAuthStore = create((set) => ({
         }
         
         return data.user;
-    }
+    },
+    cerrarSesion:async () => {
+        await supabase.auth.signOut();
+    }, 
 }));
 
 export const useSubscription = create((set) => {
