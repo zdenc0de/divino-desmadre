@@ -1,25 +1,49 @@
 import { Icon } from "@iconify/react/dist/iconify.js"
 import logo from "../assets/logoy2k.png"
 import { useEffect, useState } from "react";
-import { useGenerarCodigosAleatorios } from "../hooks/useGenerarCodigosAleatorios";
+import { generarCodigosAleatorios } from "../hooks/GenerarCodigosAleatorios";
 import { useAuthStore } from "../store/AuthStore";
-import { set } from "react-hook-form";
+import { useForm } from "react-hook-form"; // Quité "set" que no se usaba
+import { useCrearUsuarioYSesionMutate } from "../stack/LoginStack";
+import { Toaster } from "sonner";
 
 export const LoginPage = () => {
     const [showPassword, setShowPassword] = useState(false);
     const { setCredenciales } = useAuthStore();
+    const [ email, setEmail ] = useState("");
+    const [ password, setPassword ] = useState("");
+
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
-    }
+    };
+
+    const {handleSubmit} = useForm()
+
+    // Función para regenerar credenciales
+    const regenerarCredenciales = () => {
+        const response = generarCodigosAleatorios();
+        const correoCompleto = response + "@gmail.com";
+        setCredenciales({email: correoCompleto, password: response});
+        setEmail(correoCompleto);
+        setPassword(response);
+    };
+
+    // Hook con callback para regenerar después del éxito
+    const { isPending, mutate } = useCrearUsuarioYSesionMutate({
+        onSuccess: () => {
+            regenerarCredenciales(); // Regenerar credenciales después del éxito
+        }
+    });
+
+    // Generar credenciales al cargar el componente
     useEffect(() => {
-        const response = useGenerarCodigosAleatorios();
-        const correoCompleto = response+"gmail.com";
-        setCredenciales({email:correoCompleto, password:response})
-    }, [])
+        regenerarCredenciales();
+    }, []);
 
     return (
         <main
         className="flex h-screen w-full ">
+            <Toaster />
             {/* Lado Izquierdo - Banner */}
             <section
             className="hidden md:flex md:w-1/2 bg-[url('https://wallpapers.com/images/hd/y2k-crystal-clear-cubes-hmdgpnf5eomqekcm.jpg')] flex-col justify-center items-center overflow-hidden ">
@@ -59,7 +83,7 @@ export const LoginPage = () => {
                     </div>
                 </div>
             </section>
-            {/* Lado Izquierdo - Formulario LogIn */}   
+            {/* Lado Derecho - Formulario LogIn */}   
             <section
             className="bg-white w-full md:w-1/2 flex items-center justify-center px-6 md:px-16 py-8">
                 <div
@@ -68,17 +92,20 @@ export const LoginPage = () => {
                     className="text-2xl font-medium mb-6 text-center">
                         Iniciar Sesión <span className="text-blue-500">(modo invitado)</span>
                     </h1>
-                    <form>
+                    <form
+                    onSubmit={handleSubmit(mutate)}>
                         <div
                         className="mb-4">
                             <input
                             placeholder="Usuario"
+                            value={email}
                             className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4F46E5]" />
                         </div>
                         <div
                         className=" mb-4 relative">
                             <input
                             placeholder="Contraseña"
+                            value={password}
                             type={showPassword ? "text" : "password"}
                             className="w-full px-4 py-3 pr-12 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4F46E5] [&::-ms-reveal]:hidden [&::-ms-clear]:hidden [&::-webkit-textfield-decoration-container]:hidden"
                             autoComplete="current-password" />
@@ -91,6 +118,7 @@ export const LoginPage = () => {
                             </button>
                         </div>
                         <button
+                        disabled={isPending}
                         type="submit"
                         className="w-full font-bold bg-[#4F46E5] text-white py-3 rounded-lg hover:bg-[#3730a3] transition-colors mb-4">
                             INICIAR SESIÓN

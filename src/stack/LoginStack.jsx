@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query"
 import { useAuthStore } from "../store/AuthStore"
 import { toast } from "sonner"
 
-export const useCrearUsuarioYSesionMutate = () => {
+export const useCrearUsuarioYSesionMutate = (options = {}) => {
     const {crearUserYLogin, credenciales} = useAuthStore()
     return useMutation({
         mutationKey: ["Iniciar con email taster"],
@@ -17,6 +17,10 @@ export const useCrearUsuarioYSesionMutate = () => {
         },
         onSuccess: () => {
             toast.success("Usuario creado y sesión iniciada")
+            // Ejecutar el callback personalizado si existe
+            if (options.onSuccess) {
+                options.onSuccess()
+            }
         }
     })
 }
