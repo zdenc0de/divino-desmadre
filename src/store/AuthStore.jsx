@@ -26,23 +26,31 @@ export const useAuthStore = create((set) => ({
 }));
 
 export const useSubscription = create((set) => {
-    // Inicia el estado
     const store = {
-        user:null, 
-        setUser:(user) => set({user}),
+        user: null, 
+        loading: true, // Agregar estado de carga
+        setUser: (user) => set({user}),
+        setLoading: (loading) => set({loading})
     }
+    
     // Listener que se ejecuta una vez cuando se importa el store
     supabase.auth.getSession().then(({data:{session}}) => {
         if (session?.user) {
-            set({user:session.user})
+            set({user: session.user, loading: false})
+            console.log("Usuario en sesión:", session.user);
+        } else {
+            set({user: null, loading: false})
         }
     })
+    
     supabase.auth.onAuthStateChange((event, session) => {
         if (session?.user) {
-            set({user:session.user})
+            set({user: session.user, loading: false})
+            console.log("Usuario en sesión:", session.user);
         } else {
-            set({user:null})
+            set({user: null, loading: false})
         }
     })
-    return store; 
+    
+    return store;
 })
