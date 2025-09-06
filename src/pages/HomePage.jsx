@@ -1,11 +1,13 @@
 import { HeaderSticky } from "../components/HomePageComponents/HeaderSticky";
 import { InputPublicar } from "../components/HomePageComponents/InputPublicar";
 import { PublicacionCard } from "../components/HomePageComponents/PublicacionCard";
+import { FormPost } from "../components/Forms/FormPost";
 
 export const HomePage = () => {
   return (
     <main 
     className="flex min-h-screen bg-white dark:bg-bg-dark max-w-[1200px] mx-auto">
+      <FormPost />
       <section 
       className="flex flex-col w-full h-screen">
         <article 
