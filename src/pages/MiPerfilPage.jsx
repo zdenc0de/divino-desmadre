@@ -1,13 +1,8 @@
 import { useMostrarUsuarioAuthQuery } from "../stack/UsuariosStack"
+import { useUsuariosStore } from "../store/UsuariosStore"
 
 export const MiPerfilPage = () => {
-    const {data, isLoading, error} = useMostrarUsuarioAuthQuery();
-    if (isLoading) {
-        return <span>Cargando...</span>
-    }
-    if (error) {
-        return <span>Error: {error.message}</span>
-    }
+    const { dataUsuarioAuth } = useUsuariosStore()
     return (
         <div
         className="h-screen bg-amber-300 text-black flex flex-col">
@@ -15,7 +10,7 @@ export const MiPerfilPage = () => {
                    MiPerfilPage
                </span>
                <span>
-                Usuario: {data?.nombre}
+                Usuario: {dataUsuarioAuth?.nombre}
                 </span>
         </div>
     )

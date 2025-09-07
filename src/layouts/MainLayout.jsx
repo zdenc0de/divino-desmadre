@@ -1,7 +1,16 @@
 import { Outlet } from "react-router-dom"
 import { Sidebar } from "../components/SideBar/Sidebar"
+import { useMostrarUsuarioAuthQuery } from "../stack/UsuariosStack"
+
 
 export const MainLayout = () => {
+    const {isLoading, error} = useMostrarUsuarioAuthQuery();
+    if (isLoading) {
+        return <span>Cargando...</span>
+    }
+    if (error) {
+        return <span>Error: {error.message}</span>
+    }
     return (
         <main
         className="flex justify-center h-screen overflow-hidden bg-white dark:bg-bg-dark text-black dark:text-white transition-colors duration-300">
