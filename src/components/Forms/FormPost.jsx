@@ -3,6 +3,7 @@ import { useUsuariosStore } from "../../store/UsuariosStore";
 import { useEffect, useRef, useState } from "react";
 import EmojiPicker from "emoji-picker-react";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import { ImageSelector } from "../../hooks/useImageSelector";
 
 export const FormPost = () => {
   const { dataUsuarioAuth } = useUsuariosStore();
@@ -112,11 +113,12 @@ useEffect(() => {
               </div>
             </div>
           </form>
+          <ImageSelector />
         </main>
       <footer
         className="p-4 border-t border-gray-500/40">
           <div
-          className="flex items-center justify-between p-3 border-gray-500/40 rounded-lg">
+          className="flex items-center justify-between p-3 border border-gray-500/40 rounded-lg">
               <span
               className="text-sm dark:text-white">
                   Agrega a tu publicación
