@@ -1,5 +1,7 @@
 import { useRef, useState } from "react";
 import { usePostStore } from "../store/PostStore";
+import imageCompression from "browser-image-compression";
+import { set } from "react-hook-form";
 
 export const useImageSelector = () => {
 
@@ -16,32 +18,59 @@ export const useImageSelector = () => {
     const handleImageChange = async (e) => {
         const selectedFile = e.target.files[0];
         if (!selectedFile) return;
+        const sizeMB = selectedFile.size / (1024 * 1024);
+        
             const type = selectedFile.type;
+
             if (!type.startsWith("image/") && !type.startsWith("video/")) {
                 alert("Por favor selecciona un archivo de imagen o video.");
                 return;
             }
             if (type.startsWith("image/")) {
-                
+                if (sizeMB > 8) {
+                    alert("El archivo es demasiado grande. El tamaño máximo es 8MB.");
+                    return;
+                }
+                try {
+                    const options = {
+                        maxSizeMB: sizeMB > 1 ? 0.1 : 0.2,
+                        maxWidthOrHeight: 1920,
+                        useWebWorker: true,
+                    };
+                    const compressedFile = await imageCompression(selectedFile, options);
+                    const reader = new FileReader();
+                    reader.readAsDataURL(compressedFile);
+                     reader.onload = () => setFileUrl(reader.result);
+                     setFile(compressedFile)
+                     setFilePost(compressedFile)
+                     setFileType("image");
+                } catch (error) {
+                    console.error("Error al comprimir la imagen:", error);
+                    alert("Hubo un error al procesar la imagen. Intenta nuevamente.");
+                }
+            }
+            else {
+                const videoUrl = URL.createObjectURL(selectedFile);
+                 setFile(selectedFile);
+                 setFilePost(selectedFile);
+                 setFileUrl(videoUrl);
+                 setFileType("video");
             }
     }
     return (
-        <div
-        className="h-screen bg-amber-300 text-black">
-               <span>
-                   useImageSelector
-               </span>
-        </div>
+        file, fileUrl, fileType, fileInputRef, isDragging, setIsDragging, openFileSelector, handleImageChange
     );
 }
 
 export const ImageSelector = () => {
-    return (
-        <div
-        className="h-screen bg-amber-300 text-black">
-               <span>
-                   ImageSelector
-               </span>
-        </div>
-    );
-}
+    const { file, fileUrl, fileType, fileInputRef, isDragging, setIsDragging, openFileSelector, handleImageChange } = useImageSelector();
+    return <div>
+        imagen, video
+        <input type="file" 
+        accept="image/*, video/*"
+        ref={fileInputRef}
+        onChange={handleImageChange}
+        />
+    </div>
+
+};
