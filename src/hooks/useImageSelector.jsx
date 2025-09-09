@@ -1,7 +1,6 @@
 import { useRef, useState } from "react";
 import { usePostStore } from "../store/PostStore";
 import imageCompression from "browser-image-compression";
-import { set } from "react-hook-form";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
 export const useImageSelector = () => {
@@ -102,7 +101,20 @@ export const useImageSelector = () => {
 }
 
 export const ImageSelector = () => {
-    const { file, fileUrl, fileType, fileInputRef, isDragging, setIsDragging, openFileSelector, handleImageChange, removeImage, handleDragEnter, handleDragLeave, handleDragOver, handleDrop } = useImageSelector();
+    const {setStateImage} = usePostStore();
+    const { 
+        fileUrl, 
+        fileType, 
+        fileInputRef, 
+        isDragging, 
+        openFileSelector, 
+        handleImageChange, 
+        removeImage, 
+        handleDragEnter, 
+        handleDragLeave, 
+        handleDragOver, 
+        handleDrop, 
+    } = useImageSelector();
     return (
     <section
     className="relative w-full max-w-md bg-[#1e1966da] rounded-lg shadow-xl overflow-hidden">
@@ -113,6 +125,7 @@ export const ImageSelector = () => {
                 Seleccionar imagen o video
             </h2>
             <button
+            onClick={setStateImage}
             className="absolute right-4 text-gray-400 hover:text-white transition-colors duration-200">
                 <Icon icon="mdi:close" 
                 className="text-xl"/>

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import EmojiPicker from "emoji-picker-react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { ImageSelector } from "../../hooks/useImageSelector";
+import { usePostStore } from "../../store/PostStore";
 
 export const FormPost = () => {
   const { dataUsuarioAuth } = useUsuariosStore();
@@ -11,6 +12,7 @@ export const FormPost = () => {
   const textareaRef = useRef(null);
   const pickerRef = useRef(null);
   const [postText, setPostText] = useState("");
+  const {stateImage, setStateImage, setStateForm} = usePostStore()
 
   const addEmoji = (emojiData) => {
     const emojiChar = emojiData.emoji;
@@ -64,7 +66,8 @@ useEffect(() => {
         {/* Header */}
         <header className="flex items-center justify-between p-4 border-b border-gray-500/40">
           <h2 className="text-xl font-semibold">Crear Publicación</h2>
-          <BtnClose />
+          <BtnClose
+          funcion={setStateForm}/>
         </header>
 
         {/* User info + form */}
@@ -113,7 +116,9 @@ useEffect(() => {
               </div>
             </div>
           </form>
-          <ImageSelector />
+          {
+            stateImage && <ImageSelector />
+          }
         </main>
       <footer
         className="p-4 border-t border-gray-500/40">
@@ -126,6 +131,7 @@ useEffect(() => {
               <div
               className="flex space-x-4">
                   <button
+                  onClick={setStateImage}
                   className="p-1 rounded-full text-black/50 dark:text-white/50 hover:bg-gray-700 cursor-pointer hover:text-white hover:dark:text-white text-xl">
                       <Icon icon="mdi:image-outline" className="text-2xl" />
                   </button>
