@@ -58,13 +58,51 @@ export const useImageSelector = () => {
                  setFileType("video");
             }
     }
+
+    const removeImage = () => {
+        setFile(null);
+        setFileUrl(null);
+        setFileType(null);
+        if (fileInputRef.current) {
+            fileInputRef.current.value = "";
+        }
+    }
+
+    const handleDragEnter = (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        setIsDragging(true)
+    }
+
+    const handleDragLeave = (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        setIsDragging(false)
+    }
+
+    const handleDragOver = (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        setIsDragging(true)
+    }
+
+    const handleDrop = async (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        setIsDragging(false)
+        const droppedFile = e.dataTransfer.files[0];
+        if (!droppedFile) return;
+        await handleImageChange({ target: {files: [droppedFile] } } );
+    }
+
+
     return {
-        file, fileUrl, fileType, fileInputRef, isDragging, setIsDragging, openFileSelector, handleImageChange
+        file, fileUrl, fileType, fileInputRef, setIsDragging, openFileSelector, handleImageChange, removeImage, isDragging, handleDragEnter, handleDragLeave, handleDragOver, handleDrop
     }
 }
 
 export const ImageSelector = () => {
-    const { file, fileUrl, fileType, fileInputRef, isDragging, setIsDragging, openFileSelector, handleImageChange } = useImageSelector();
+    const { file, fileUrl, fileType, fileInputRef, isDragging, setIsDragging, openFileSelector, handleImageChange, removeImage, handleDragEnter, handleDragLeave, handleDragOver, handleDrop } = useImageSelector();
     return (
     <section
     className="relative w-full max-w-md bg-[#1e1966da] rounded-lg shadow-xl overflow-hidden">
@@ -81,7 +119,11 @@ export const ImageSelector = () => {
             </button>
         </header>
         <main
-        className="p-8 flex flex-col items-center justify-center min-h-[240px] transition-colors duration-300">
+        className={`p-8 flex flex-col items-center justify-center min-h-[240px] transition-colors duration-300 ${isDragging ? "bg-[#1e1966/85.5]" : "bg-[#000000]"}`}
+        onDragEnter={handleDragEnter}
+        onDragLeave={handleDragLeave}
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}>
             {
                 fileUrl ? (
                 <div
@@ -99,9 +141,12 @@ export const ImageSelector = () => {
                         className="w-full max-w-[280px] max-h-[280px] rounded-lg object-contain" />
                     )}
                     <button
+                    onClick={removeImage}
                     type="button"
                     className="absolute top-2 right-2 w-8 h-8 bg-black bg-opacity-60 rounded-full border-none cursor-pointer flex items-center justify-center transition duration-300 opacity-0 group-hover:opacity-100 hover:bg-opacity-80">
-                        <Icon icon="mdi:close" className="text-white text-lg" />
+                        <Icon 
+                        icon="mdi:close" 
+                        className="text-white text-lg" />
                     </button>
                     <button
                     type="button"
@@ -140,6 +185,7 @@ export const ImageSelector = () => {
         accept="image/*, video/*"
         ref={fileInputRef}
         onChange={handleImageChange}
+        className="hidden"
         />
     </section>)
 
