@@ -80,4 +80,7 @@ export const usePostStore = create((set, get) => ({
     const { file } = get();
     await InsertarPostDB(p, file);
   },
+  mostrarPost: async (p) => {
+    const {data, error} = await supabase.rpc("", {})
+  }
 }));
