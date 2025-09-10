@@ -5,7 +5,7 @@ import { FormPost } from "../components/Forms/FormPost";
 import { usePostStore } from "../store/PostStore";
 
 export const HomePage = () => {
-  const {stateForm, setStateForm} = usePostStore();
+  const {stateForm} = usePostStore();
   return (
     <main 
     className="flex min-h-screen bg-white dark:bg-bg-dark max-w-[1200px] mx-auto">
