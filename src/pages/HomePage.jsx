@@ -3,12 +3,14 @@ import { InputPublicar } from "../components/HomePageComponents/InputPublicar";
 import { PublicacionCard } from "../components/HomePageComponents/PublicacionCard";
 import { FormPost } from "../components/Forms/FormPost";
 import { usePostStore } from "../store/PostStore";
+import { Toaster } from "sonner";
 
 export const HomePage = () => {
   const {stateForm} = usePostStore();
   return (
     <main 
     className="flex min-h-screen bg-white dark:bg-bg-dark max-w-[1200px] mx-auto">
+      <Toaster position = "top-left"/>
       {
         stateForm && <FormPost />
       }

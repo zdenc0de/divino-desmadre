@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query"
 import { usePostStore } from "../store/PostStore"
+import { InsertarPostDB } from "../store/PostStore" // <-- IMPORT DIRECTO
 import { useFormattedDate } from "../hooks/UseFormatDate"
 import { useUsuariosStore } from "../store/UsuariosStore"
 import { toast } from "sonner"
@@ -7,7 +8,7 @@ import { toast } from "sonner"
 export const useInsertarPostMutate = () => {
     const { dataUsuarioAuth } = useUsuariosStore()
     const fechaActual = useFormattedDate()
-    const { InsertarPost, file } = usePostStore() // <-- traemos file de zustand
+    const { file } = usePostStore() // <-- Solo traemos file
 
     return useMutation({
         mutationKey: ["Insertar Post"],
@@ -19,20 +20,23 @@ export const useInsertarPostMutate = () => {
             }
 
             const p = {
-                titulo: data.titulo,
+                descripcion: data.descripcion,
                 url: "-",
                 fecha: fechaActual,
                 id_usuario: dataUsuarioAuth?.id,
                 type: type,
             }
 
-            await InsertarPost(p, file)
+            // Usar la función importada directamente
+            await InsertarPostDB(p, file)
         },
-        onError: (error) => { // <-- corregido
+        onError: (error) => {
             toast.error("Error al crear la publicación: " + error.message)
         },
         onSuccess: () => {
             toast.success("Publicación creada con éxito")
+            // Opcional: cerrar el formulario después de éxito
+            // setStateForm()
         },
     })
 }
