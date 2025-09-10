@@ -3,8 +3,9 @@ import { useUsuariosStore } from "../../store/UsuariosStore";
 import { useEffect, useRef, useState } from "react";
 import EmojiPicker from "emoji-picker-react";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { ImageSelector } from "../../hooks/useImageSelector";
+import { ImageSelector } from "../ImageSelector";
 import { usePostStore } from "../../store/PostStore";
+
 
 export const FormPost = () => {
   const { dataUsuarioAuth } = useUsuariosStore();
