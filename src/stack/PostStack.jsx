@@ -8,7 +8,7 @@ import { toast } from "sonner"
 export const useInsertarPostMutate = () => {
     const { dataUsuarioAuth } = useUsuariosStore()
     const fechaActual = useFormattedDate()
-    const { file } = usePostStore() // <-- Solo traemos file
+    const { file, setStateForm, setFile } = usePostStore() // <-- Solo traemos file y setStateForm
 
     return useMutation({
         mutationKey: ["Insertar Post"],
@@ -35,8 +35,9 @@ export const useInsertarPostMutate = () => {
         },
         onSuccess: () => {
             toast.success("Publicación creada con éxito")
-            // Opcional: cerrar el formulario después de éxito
-            // setStateForm()
+            // Opcional: cerrar el formulario después de éxitoº
+            setStateForm(false)
+            setFile(null) // Limpiar la imagen en el store
         },
     })
 }
