@@ -1,5 +1,6 @@
 import { Icon } from "@iconify/react/dist/iconify.js"
 import { PostImageFrame } from "./PostImageFrame"
+import { PostVideoFrame } from "./PostVideoFrame"
 
 export const PublicacionCard = ({item}) => {
     return (
@@ -38,7 +39,7 @@ export const PublicacionCard = ({item}) => {
                    </p>
                    <div>
                     {
-                        item?.url !== "-" && <PostImageFrame src={item?.url} />
+                        item?.url !== "-" && (item?.type=== "imagen" ? (<PostImageFrame src={item?.url} />) : (<PostVideoFrame src={item?.url} />))
                     }
                    </div>
                    <div
