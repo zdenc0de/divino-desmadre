@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import { supabase } from "../supabase/supabase.config";
-import { data } from "react-router-dom";
 
 export const useAuthStore = create((set) => ({
     // Estado
@@ -23,37 +22,46 @@ export const useAuthStore = create((set) => ({
         
         return data.user;
     },
-    cerrarSesion:async () => {
+    cerrarSesion: async () => {
         await supabase.auth.signOut();
     }, 
 }));
 
-export const useSubscription = create((set) => {
-    const store = {
-        user: null, 
-        loading: true, // Agregar estado de carga
-        setUser: (user) => set({user}),
-        setLoading: (loading) => set({loading})
-    }
+export const useSubscription = create((set) => ({
+    user: null, 
+    loading: true,
+    setUser: (user) => set({user}),
+    setLoading: (loading) => set({loading})
+}));
+
+// 👈 Función de inicialización separada
+let isInitialized = false;
+
+export const initializeAuth = () => {
+    if (isInitialized) return;
+    isInitialized = true;
     
-    // Listener que se ejecuta una vez cuando se importa el store
+    const { setUser, setLoading } = useSubscription.getState();
+    
     supabase.auth.getSession().then(({data:{session}}) => {
         if (session?.user) {
-            set({user: session.user, loading: false})
+            setUser(session.user);
+            setLoading(false);
             console.log("Usuario en sesión:", session.user);
         } else {
-            set({user: null, loading: false})
+            setUser(null);
+            setLoading(false);
         }
-    })
+    });
     
     supabase.auth.onAuthStateChange((event, session) => {
         if (session?.user) {
-            set({user: session.user, loading: false})
+            setUser(session.user);
+            setLoading(false);
             console.log("Usuario en sesión:", session.user);
         } else {
-            set({user: null, loading: false})
+            setUser(null);
+            setLoading(false);
         }
-    })
-    
-    return store;
-})
+    });
+};
