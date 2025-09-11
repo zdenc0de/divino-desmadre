@@ -48,7 +48,9 @@ export const HomePage = () => {
             {dataPost?.pages?.map((page, pageIndex) => 
               page?.map((item, index) => <PublicacionCard key={`${pageIndex}-${index}`} item={item} />) 
             )}
-            <SpinnerLocal />
+            {
+              isFetchingNextPage && <SpinnerLocal />
+            }
           </div>
         </article>
         <article 
