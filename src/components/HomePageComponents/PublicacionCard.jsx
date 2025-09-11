@@ -1,7 +1,7 @@
 import { Icon } from "@iconify/react/dist/iconify.js"
 import { PostImageFrame } from "./PostImageFrame"
 
-export const PublicacionCard = () => {
+export const PublicacionCard = ({item}) => {
     return (
         <div
         className="border-b border-gray-500/50 p-4">
@@ -34,7 +34,7 @@ export const PublicacionCard = () => {
                className="mt-3">
                    <p
                    className="mb-2">
-                       saludame porras
+                    {item?.descripcion}
                    </p>
                    <div>
                     <PostImageFrame 
