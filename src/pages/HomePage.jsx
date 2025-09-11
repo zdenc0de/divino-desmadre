@@ -6,27 +6,29 @@ import { usePostStore } from "../store/PostStore";
 import { Toaster } from "sonner";
 import { useMostrarPostQuery } from "../stack/PostStack";
 import { useEffect, useRef } from "react";
+import { SpinnerLocal } from "../components/ui/spinners/SpinnerLocal";
 
 export const HomePage = () => {
   const {stateForm} = usePostStore();
   const {data:dataPost, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading:isLoadingPost} = useMostrarPostQuery()
+
   const scrollRef = useRef(null);
   useEffect(() => {
-    const el = scrollRef.current;
-    const handleScroll = () => {
-      if (el.scrollTop + el.clientHeight >= el.scrollHeight - 200 && hasNextPage && !isFetchingNextPage) {
-        fetchNextPage();
+  const el = scrollRef.current;
+  if (!el) return; 
+  
+  const handleScroll = () => {
+    if (el.scrollTop + el.clientHeight >= el.scrollHeight - 200 && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
     }
   }
-  if(el) {
-    el.addEventListener("scroll", handleScroll);
-    return () => el.removeEventListener("scroll", handleScroll);
-  }
-  }, [
-    fetchNextPage, 
-    hasNextPage, 
-    isFetchingNextPage
-  ])
+  
+  el.addEventListener("scroll", handleScroll);
+  
+  return () => {
+    el.removeEventListener("scroll", handleScroll);
+  };
+}, [fetchNextPage, hasNextPage, isFetchingNextPage]);
   return (
     <main 
     className="flex min-h-screen bg-white dark:bg-bg-dark max-w-[1200px] mx-auto">
@@ -46,6 +48,7 @@ export const HomePage = () => {
             {dataPost?.pages?.map((page, pageIndex) => 
               page?.map((item, index) => <PublicacionCard key={`${pageIndex}-${index}`} item={item} />) 
             )}
+            <SpinnerLocal />
           </div>
         </article>
         <article 
