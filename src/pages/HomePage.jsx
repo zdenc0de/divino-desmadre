@@ -4,9 +4,11 @@ import { PublicacionCard } from "../components/HomePageComponents/PublicacionCar
 import { FormPost } from "../components/Forms/FormPost";
 import { usePostStore } from "../store/PostStore";
 import { Toaster } from "sonner";
+import { useMostrarPostQuery } from "../stack/PostStack";
 
 export const HomePage = () => {
   const {stateForm} = usePostStore();
+  const {data} = useMostrarPostQuery()
   return (
     <main 
     className="flex min-h-screen bg-white dark:bg-bg-dark max-w-[1200px] mx-auto">

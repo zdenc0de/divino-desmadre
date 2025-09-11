@@ -23,6 +23,8 @@ const subirArchivo = async (id, file) => {
       .getPublicUrl(ruta);
     return urlimagen.publicUrl; // Retorna la URL pública correcta
   }
+  
+  return null; // Importante: retornar algo si no hay data
 };
 
 // Función para editar publicación
@@ -33,7 +35,7 @@ const editarPublicacion = async (p) => {
   }
 };
 
-// OPCIÓN 1: Exportar la función independientemente
+// Exportar la función independientemente
 export const InsertarPostDB = async (p, file) => {
   const { data, error } = await supabase
     .from(tabla)
@@ -45,8 +47,8 @@ export const InsertarPostDB = async (p, file) => {
     throw new Error(error.message);
   }
 
-  if (file) {
-    const nuevo_id = data?.id;
+  if (file && data) { // Verificar que data exista
+    const nuevo_id = data.id;
     const urlImagen = await subirArchivo(nuevo_id, file);
     if (urlImagen) {
       const pUrl = {
@@ -69,18 +71,43 @@ export const usePostStore = create((set, get) => ({
     set((state) => ({ stateImage: !state.stateImage })),
 
   stateForm: false,
-  setStateForm: () =>
-    set((state) => ({ stateForm: !state.stateForm })),
+  setStateForm: (valor) => {
+    // Permitir pasar un valor específico o toggle
+    if (typeof valor === 'boolean') {
+      set({ stateForm: valor });
+    } else {
+      set((state) => ({ stateForm: !state.stateForm }));
+    }
+  },
 
-  // OPCIÓN 2: Incluir la función en el store
+  // Incluir la función en el store para compatibilidad
   InsertarPostDB: InsertarPostDB,
 
-  // acción con nombre distinto para evitar conflicto
+  // Acción para insertar post
   insertarPostAction: async (p) => {
     const { file } = get();
     await InsertarPostDB(p, file);
   },
+  
+  // Estado para mostrar posts
+  dataPost: null,
+  
+  // Función para mostrar posts
   mostrarPost: async (p) => {
-    const {data, error} = await supabase.rpc("", {})
+    try {
+      const { data, error } = await supabase
+        .rpc("publicaciones_con_detalles", { _id_usuario: p.id_usuario })
+        .range(p.desde, p.desde + p.hasta - 1);
+      
+      if (error) {
+        throw new Error(error.message);
+      }
+      
+      set({ dataPost: data });
+      return data;
+    } catch (error) {
+      console.error("Error al cargar posts:", error);
+      throw error;
+    }
   }
 }));
