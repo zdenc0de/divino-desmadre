@@ -63,6 +63,8 @@ export const InsertarPostDB = async (p, file) => {
 };
 
 export const usePostStore = create((set, get) => ({
+  itemSelect: null,
+  setItemSelect: (p) => set({ itemSelect: p }),
   file: null,
   setFile: (p) => set({ file: p }),
 
@@ -109,5 +111,9 @@ export const usePostStore = create((set, get) => ({
       console.error("Error al cargar posts:", error);
       throw error;
     }
+  },
+  likePost: async (p) => {
+    const {error} = await supabase.rpc("toggle_like", p)
+    if (error) throw new Error(error.message); 
   }
 }));
