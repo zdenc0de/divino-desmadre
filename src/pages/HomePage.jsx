@@ -7,6 +7,7 @@ import { Toaster } from "sonner";
 import { useMostrarPostQuery } from "../stack/PostStack";
 import { useEffect, useRef } from "react";
 import { SpinnerLocal } from "../components/ui/spinners/SpinnerLocal";
+import { useSupabaseSubscription } from "../hooks/useSupabaseSubscription";
 
 export const HomePage = () => {
   const {stateForm} = usePostStore();
@@ -29,6 +30,12 @@ export const HomePage = () => {
     el.removeEventListener("scroll", handleScroll);
   };
 }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+
+useSupabaseSubscription({
+  channelName: "public:publicaciones", 
+  options: {event: "*", schema: "public", table: "publicaciones"}, 
+  queryKey: ["mostrar post"]
+})
   return (
     <main 
     className="flex min-h-screen bg-white dark:bg-bg-dark max-w-[1200px] mx-auto">
