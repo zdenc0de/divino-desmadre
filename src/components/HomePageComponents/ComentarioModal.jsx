@@ -1,7 +1,11 @@
 import { Icon } from "@iconify/react/dist/iconify.js"
 import { BtnClose } from "../ui/buttons/BtnClose"
+import { useInsertarComentarioMutate } from "../../stack/ComentariosStack"
+import { useState } from "react";
 
 export const ComentarioModal = ({item, onClose}) => {
+    const [comentario, setComentario] = useState("");
+    const { mutate: comentarioMutate } = useInsertarComentarioMutate({comentario: comentario, setComentario: setComentario});
     return (
         <main
         className="fixed inset-0 z-100 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
@@ -44,6 +48,8 @@ export const ComentarioModal = ({item, onClose}) => {
                             <input 
                             className="flex-1 bg-gray-100 dark:bg-bg-dark text-sm rounded-2xl px-4 py-2 focus:outline-none resize-none"
                             placeholder="Escribe un comentario..."
+                            value={comentario}
+                            onChange={(e) => setComentario(e.target.value)}
                             />
                             <button
                             className="text-gray-500 hover:text-gray-700 relative">
@@ -55,7 +61,8 @@ export const ComentarioModal = ({item, onClose}) => {
                         <section
                         className="flex justify-end">
                             <button
-                            className="flex justify-end gap-1 px-4 py-2 rounded-full text-sm text-gray-500 cursor-not-allowed">
+                            className="flex justify-end gap-1 px-4 py-2 rounded-full text-sm text-gray-500 cursor-not-allowed"
+                            onClick={comentarioMutate}>
                                 <Icon 
                                 icon="mdi:send" 
                                 width={20}
