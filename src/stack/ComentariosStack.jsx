@@ -14,9 +14,8 @@ export const useInsertarComentarioMutate = (p) => {
         mutationKey: ["insertar comentario"],
         mutationFn: () => insertarComentario({
             comentario: p.comentario,
-            id_publicacion: p.id_publicacion,
+            id_publicacion: p.id_publicacion || itemSelect?.id, 
             id_usuario: dataUsuarioAuth?.id, 
-            id_publicacion: itemSelect?.id,
             fecha: fechaActual, 
         }),
         onError: (error) => {

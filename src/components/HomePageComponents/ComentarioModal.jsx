@@ -3,14 +3,20 @@ import { BtnClose } from "../ui/buttons/BtnClose"
 import { useInsertarComentarioMutate } from "../../stack/ComentariosStack"
 import { useEffect, useRef, useState } from "react";
 import EmojiPicker from "emoji-picker-react";
+import { useComentariosStore } from "../../store/ComentariosStore";
 
 export const ComentarioModal = ({item, onClose}) => {
     const [comentario, setComentario] = useState("");
-    const { mutate: comentarioMutate } = useInsertarComentarioMutate({comentario: comentario, setComentario: setComentario});
+    const { mutate: comentarioMutate } = useInsertarComentarioMutate({
+        comentario: comentario, 
+        setComentario: setComentario,
+        id_publicacion: item?.id // Agregar el ID de la publicación
+    });
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
     const pickerRef = useRef(null);
     const textComentarioRef = useRef(null);
     const emojiButtonRef = useRef(null);
+    const { setShowModal } = useComentariosStore();
 
 const addEmoji = (emojiData) => {
     const emojiChar = emojiData.emoji;
@@ -72,7 +78,7 @@ const addEmoji = (emojiData) => {
                      <span>
                         Descripcion
                      </span>
-                     <BtnClose onClick={onClose} />
+                     <BtnClose funcion={setShowModal} />
                 </header>
                 <section
                 className="flex-1 overflow-y-auto p-4 bg-white dark:bg-neutral-900">

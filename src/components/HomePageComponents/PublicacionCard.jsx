@@ -3,10 +3,12 @@ import { PostImageFrame } from "./PostImageFrame"
 import { PostVideoFrame } from "./PostVideoFrame"
 import { usePostStore } from "../../store/PostStore"
 import { useLikePostMutate } from "../../stack/PostStack"
+import { useComentariosStore } from "../../store/ComentariosStore"
 
 export const PublicacionCard = ({item}) => {
     const { setItemSelect } = usePostStore();
     const { mutate } = useLikePostMutate()
+    const { setShowModal } = useComentariosStore();
     return (
         <div
         className="border-b border-gray-500/50 p-4">
@@ -59,6 +61,9 @@ export const PublicacionCard = ({item}) => {
                             className={`text-3xl p-1 rounded-full ${item?.like_usuario_actual?"text-red-500":"text-gray-400 hover:bg-[rgba(78, 184, 233, 0.5)]"}  cursor-pointer`}/>
                         </button>
                         <button
+                        onClick={() => { 
+                            setItemSelect(item);
+                            setShowModal(); }}
                         className="flex items-center gap-2 cursor-pointer">
                             <Icon
                             icon = {"mdi:comment-outline"} 
