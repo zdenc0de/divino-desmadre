@@ -1,22 +1,29 @@
 import { Icon } from "@iconify/react/dist/iconify.js"
 import { BtnClose } from "../ui/buttons/BtnClose"
-import { useInsertarComentarioMutate } from "../../stack/ComentariosStack"
+import { useInsertarComentarioMutate, useMostrarComentariosQuery } from "../../stack/ComentariosStack"
 import { useEffect, useRef, useState } from "react";
 import EmojiPicker from "emoji-picker-react";
 import { useComentariosStore } from "../../store/ComentariosStore";
+import { useUsuariosStore } from "../../store/UsuariosStore";
+import { usePostStore } from "../../store/PostStore";
+import { SpinnerLocal } from "../ui/spinners/SpinnerLocal";
+import { ComentarioCard } from "./ComentarioCard";
 
-export const ComentarioModal = ({item, onClose}) => {
+export const ComentarioModal = () => {
     const [comentario, setComentario] = useState("");
+    const {itemSelect: item} = usePostStore()
     const { mutate: comentarioMutate } = useInsertarComentarioMutate({
         comentario: comentario, 
         setComentario: setComentario,
-        id_publicacion: item?.id // Agregar el ID de la publicación
+        id_publicacion: item?.id 
     });
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
     const pickerRef = useRef(null);
     const textComentarioRef = useRef(null);
     const emojiButtonRef = useRef(null);
     const { setShowModal } = useComentariosStore();
+    const { dataUsuarioAuth } = useUsuariosStore();
+    const {data: dataComentarios, isLoading: isLoadingComentarios} = useMostrarComentariosQuery();
 
 const addEmoji = (emojiData) => {
     const emojiChar = emojiData.emoji;
@@ -67,24 +74,31 @@ const addEmoji = (emojiData) => {
                     <div 
                     className="flex items-center gap-3 text-black dark:text-white">
                         <img 
-                        src="https://locosxlosjuegos.com/wp-content/uploads/2022/09/sjsjs.jpg" 
+                        src={item?.foto_perfil} 
                         className="w-12 h-12 rounded-full object-cover"
                          />
                          <span
                           className="font-bold lg:max-w-none lg:overflow-visible md:text-ellipsis max-w-[200px] truncate whitespace-nowrap overflow-hidden">
-                             Divino Desmadre
+                            {item?.nombre_usuario}
                         </span>
                      </div>
                      <span>
-                        Descripcion
+                        {item?.descripcion}
                      </span>
                      <BtnClose funcion={setShowModal} />
                 </header>
                 <section
                 className="flex-1 overflow-y-auto p-4 bg-white dark:bg-neutral-900">
-                    <p>
-                        Comentarios
-                    </p>
+                    {
+                        isLoadingComentarios ? <SpinnerLocal /> : (
+                            dataComentarios?.length > 0 && dataComentarios.map((item, index) => {
+                                return (
+                                    <ComentarioCard item={item} key={index} />
+                                )
+                            })
+                        )
+                    }
+                    
                 </section>
                 <footer
                 className="flex items-center gap-2 p-4 bg-white dark:bg-neutral-900">
@@ -94,8 +108,8 @@ const addEmoji = (emojiData) => {
                         <section
                         className="flex w-full gap-4">
                              <img 
-                    src="https://locosxlosjuegos.com/wp-content/uploads/2022/09/sjsjs.jpg"
-                    className="w-10 h-10 rounded-full object-cover" alt="Avatar"/>
+                            src={dataUsuarioAuth?.foto_perfil}
+                            className="w-10 h-10 rounded-full object-cover" alt="Avatar"/>
                             <input 
                             ref={textComentarioRef}
                             className="flex-1 bg-gray-100 dark:bg-bg-dark text-sm rounded-2xl px-4 py-2 focus:outline-none resize-none"

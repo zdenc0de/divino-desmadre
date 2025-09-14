@@ -1,9 +1,10 @@
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 import { useComentariosStore } from "../store/ComentariosStore";
 import { useUsuariosStore } from "../store/UsuariosStore";
 import { usePostStore } from "../store/PostStore";
 import { useFormattedDate } from "../hooks/UseFormatDate";
 import { toast } from "sonner";
+import { use } from "react";
 
 export const useInsertarComentarioMutate = (p) => {
     const { insertarComentario } = useComentariosStore();
@@ -25,5 +26,14 @@ export const useInsertarComentarioMutate = (p) => {
             toast.success("Comentario insertado correctamente");
             p.setComentario("");
         }
+    })
+}
+
+export const useMostrarComentariosQuery = () => {
+    const {mostrarComentarios} = useComentariosStore();
+    const {itemSelect} = usePostStore();
+    return useQuery({
+        queryKey: ["mostrar comentarios", {_id_publicacion: itemSelect?.id }],
+        queryFn: () => mostrarComentarios({_id_publicacion: itemSelect?.id }),
     })
 }

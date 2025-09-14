@@ -12,7 +12,7 @@ import { ComentarioModal } from "../components/HomePageComponents/ComentarioModa
 import { useComentariosStore } from "../store/ComentariosStore";
 
 export const HomePage = () => {
-  const {stateForm} = usePostStore();
+  const {stateForm, setStateForm, itemSelect} = usePostStore();
   const {data:dataPost, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading:isLoadingPost} = useMostrarPostQuery()
   const {showModal} = useComentariosStore()
 

@@ -17,7 +17,7 @@ showModal: false,
         }
     }, 
     mostrarComentarios: async (p) => {
-        const {data, error} = await supabase.rpc("nombre_de_la_funcion", p);
+        const {data, error} = await supabase.rpc("comentarios_con_respuestas", p);
         if (error) {
             throw new Error(error.message);
         }
