@@ -1,4 +1,7 @@
+import { useRelativeTime } from "../../hooks/useRelativeTime";
+
 export const ComentarioCard = ({ item }) => {
+
     return (
         <div
         className="pl-4 ">
@@ -25,6 +28,13 @@ export const ComentarioCard = ({ item }) => {
                                 {item?.comentario}
                             </p>
                         </section>
+
+                    </div>
+                    <div
+                    className="flex gap-3 mt-1 text-xs text-gray-500 ml-2 relative">
+                        <span>
+                            {useRelativeTime(item?.fecha)}
+                        </span>
 
                     </div>
                     {

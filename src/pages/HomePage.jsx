@@ -39,6 +39,12 @@ useSupabaseSubscription({
   options: {event: "*", schema: "public", table: "publicaciones"}, 
   queryKey: ["mostrar post"]
 })
+
+useSupabaseSubscription({
+  channelName: "public:comentarios", 
+  options: {event: "*", schema: "public", table: "comentarios"}, 
+  queryKey: ["mostrar comentarios"]
+})
   return (
     <main 
     className="flex min-h-screen bg-white dark:bg-bg-dark max-w-[1200px] mx-auto">
