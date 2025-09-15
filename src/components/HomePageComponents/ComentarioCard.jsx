@@ -35,6 +35,9 @@ export const ComentarioCard = ({ item }) => {
                         <span>
                             {useRelativeTime(item?.fecha)}
                         </span>
+                        <button>
+                            Responder
+                        </button>
 
                     </div>
                     {
