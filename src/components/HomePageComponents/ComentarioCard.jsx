@@ -1,6 +1,9 @@
 import { useRelativeTime } from "../../hooks/useRelativeTime";
+import { useRespuestasComentariosStore } from "../../store/RespuestasComentariosStore";
+import { InputRespuestaParaComentario } from "./InputRespuestaParaComentario";
 
 export const ComentarioCard = ({ item }) => {
+    const {respuestaActivaParaComentarioId, limpiarRespuestaActiva, setRespuestaActiva} = useRespuestasComentariosStore()
 
     return (
         <div
@@ -36,8 +39,11 @@ export const ComentarioCard = ({ item }) => {
                             {useRelativeTime(item?.fecha)}
                         </span>
                         <button
-                        className="hover:underline cursor-pointer">
-                            Responder
+                        className="hover:underline cursor-pointer"
+                        onClick={() => respuestaActivaParaComentarioId === item?.id ? limpiarRespuestaActiva() : setRespuestaActiva(item?.id)}>
+                            {
+                                respuestaActivaParaComentarioId === item?.id ? "Cancelar" : "Responder"
+                            }
                         </button>
 
                     </div>
@@ -49,6 +55,15 @@ export const ComentarioCard = ({ item }) => {
                                     item?.respuestas_count === 1 ? (`Ver ${item?.respuestas_count} respuesta`) : (`Ver ${item?.respuestas_count} respuestas`)
                                 }
                             </button>
+                        )
+                    }
+                    {
+                        respuestaActivaParaComentarioId === item?.id && (
+                            <div>
+                                <div 
+                                className="w-4 h-4 border-l-2 border-b-2 border-gray-300 dark:border-gray-600 rounded-bl-[8px] absolute bottom-18 -ml-[29px]"/>
+                                <InputRespuestaParaComentario />
+                            </div>
                         )
                     }
                 </div>

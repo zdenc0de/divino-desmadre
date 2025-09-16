@@ -7,8 +7,9 @@ export const useRespuestasComentariosStore = create((set) => ({
     respuesta: "", 
     setRespuesta: (p) => set({ respuesta: p }),
 	respuestaActivaParaComentarioId: null,
-     setRespuestaActiva: (p) => set({
-        respuestaActivaParaComentarioId: p }), 
+    setRespuestaActiva: (p) => set({
+    respuestaActivaParaComentarioId: p }), 
+    limpiarRespuestaActiva: () => set({ respuestaActivaParaComentarioId: null }), 
      insertarRespuestaAComentario: async (p) => {
         const {error} = await supabase.from(tabla).insert(p)
         if(error) throw new Error(error.message);
