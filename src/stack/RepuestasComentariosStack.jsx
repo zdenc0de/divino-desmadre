@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query"
 import { useRespuestasComentariosStore } from "../store/RespuestasComentariosStore"
-import { useFormattedDate } from "../hooks/useFormattedDate"
+import { useFormattedDate } from "../hooks/useFormatDate"
 import { useUsuariosStore } from "../store/UsuariosStore"
 import { toast } from "sonner"
 

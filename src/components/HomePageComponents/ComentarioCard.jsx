@@ -8,9 +8,6 @@ export const ComentarioCard = ({ item }) => {
     return (
         <div
         className="pl-4 ">
-            <span>
-                ComentarioCard
-            </span>
             <div
             className="flex items-start gap-2 group relative w-full">
                 <img
