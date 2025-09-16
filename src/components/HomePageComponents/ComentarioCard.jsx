@@ -35,7 +35,8 @@ export const ComentarioCard = ({ item }) => {
                         <span>
                             {useRelativeTime(item?.fecha)}
                         </span>
-                        <button>
+                        <button
+                        className="hover:underline cursor-pointer">
                             Responder
                         </button>
 
