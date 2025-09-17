@@ -11,6 +11,7 @@ import { useSupabaseSubscription } from "../hooks/useSupabaseSubscription";
 import { ComentarioModal } from "../components/HomePageComponents/ComentarioModal";
 import { useComentariosStore } from "../store/ComentariosStore";
 import { useMostrarRespuestaComentariosQuery } from "../stack/RepuestasComentariosStack";
+import { FormActualizarPerfil } from "../components/Forms/FormActualizarPerfil";
 
 export const HomePage = () => {
   const {stateForm, setStateForm, itemSelect} = usePostStore();
@@ -63,6 +64,7 @@ export const HomePage = () => {
 
   return (
     <main className="flex min-h-screen bg-white dark:bg-bg-dark max-w-[1200px] mx-auto">
+      <FormActualizarPerfil />
       <Toaster position="top-left"/>
       {stateForm && <FormPost />}
       
