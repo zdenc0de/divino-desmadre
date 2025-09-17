@@ -33,7 +33,7 @@ export const useImageSelector = () => {
       }
       try {
         const options = {
-          maxSizeMB: sizeMB > 1 ? 0.1 : 0.2,
+          maxSizeMB: sizeMB > 1024 * 1024 ? 0.1 : 0.2,
           maxWidthOrHeight: 1920,
           useWebWorker: true,
         };
