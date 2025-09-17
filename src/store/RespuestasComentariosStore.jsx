@@ -29,6 +29,7 @@ export const useRespuestasComentariosStore = create((set, get) => ({
             throw error;
         }
     }, 
+    dataRespuestaAComentario: null, 
     
     mostrarRespuestaAComentario: async (p) => {
         try {
@@ -40,11 +41,11 @@ export const useRespuestasComentariosStore = create((set, get) => ({
             if (error) {
                 throw new Error(error.message);
             }
-            
+            set({ dataRespuestaAComentario: data });
             return data;
         } catch (error) {
             console.error("Error en mostrarRespuestaAComentario:", error);
             throw error;
         }
-    }
+    },
 }));

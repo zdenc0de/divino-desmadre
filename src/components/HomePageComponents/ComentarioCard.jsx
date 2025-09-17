@@ -3,10 +3,11 @@ import { useMostrarRespuestaComentariosQuery } from "../../stack/RepuestasComent
 import { useComentariosStore } from "../../store/ComentariosStore";
 import { useRespuestasComentariosStore } from "../../store/RespuestasComentariosStore";
 import { InputRespuestaParaComentario } from "./InputRespuestaParaComentario";
+import { RespuestaCard } from "./RespuestaCard";
 
 export const ComentarioCard = ({ item }) => {
-    const {respuestaActivaParaComentarioId, limpiarRespuestaActiva, setRespuestaActiva} = useRespuestasComentariosStore()
-    const {setItemSelect} = useComentariosStore()
+    const {respuestaActivaParaComentarioId, limpiarRespuestaActiva, setRespuestaActiva, dataRespuestaAComentario} = useRespuestasComentariosStore()
+    const {setItemSelect, itemSelect: itemSelectComentario} = useComentariosStore()
 
     return (
         <div
@@ -57,6 +58,11 @@ export const ComentarioCard = ({ item }) => {
                                 }
                             </button>
                         )
+                    }
+                    {
+                        itemSelectComentario?.id === item?.id && dataRespuestaAComentario?.map((item, index) => {
+                            return <RespuestaCard item={item}/>
+                        })
                     }
                     {
                         respuestaActivaParaComentarioId === item?.id && (
