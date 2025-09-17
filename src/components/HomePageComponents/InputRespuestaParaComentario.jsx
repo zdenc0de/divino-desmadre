@@ -80,7 +80,10 @@ export const InputRespuestaParaComentario = () => {
                         className="flex-1 bg-gray-100 dark:bg-bg-dark text-sm rounded-2xl px-4 py-2 focus:outline-none resize-none"
                         placeholder="Escribe una respuesta..."
                         value={respuesta} // Usar respuesta del store
-                        onChange={(e) => setRespuesta(e.target.value)} // Actualizar store
+                        onChange={(e) => {
+                            setRespuesta(e.target.value);
+                            setRespuesta(e.target.value);
+                        }} // Actualizar store
                         onKeyPress={handleKeyPress}
                         disabled={isPending}
                     />

@@ -10,11 +10,13 @@ import { SpinnerLocal } from "../components/ui/spinners/SpinnerLocal";
 import { useSupabaseSubscription } from "../hooks/useSupabaseSubscription";
 import { ComentarioModal } from "../components/HomePageComponents/ComentarioModal"
 import { useComentariosStore } from "../store/ComentariosStore";
+import { useMostrarRespuestaComentariosQuery } from "../stack/RepuestasComentariosStack";
 
 export const HomePage = () => {
   const {stateForm, setStateForm, itemSelect} = usePostStore();
   const {data:dataPost, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading:isLoadingPost} = useMostrarPostQuery()
   const {showModal} = useComentariosStore()
+  const {data: dataRespuestaComentario} = useMostrarRespuestaComentariosQuery()
 
   const scrollRef = useRef(null);
   useEffect(() => {

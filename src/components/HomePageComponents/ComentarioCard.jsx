@@ -1,9 +1,12 @@
 import { useRelativeTime } from "../../hooks/useRelativeTime";
+import { useMostrarRespuestaComentariosQuery } from "../../stack/RepuestasComentariosStack";
+import { useComentariosStore } from "../../store/ComentariosStore";
 import { useRespuestasComentariosStore } from "../../store/RespuestasComentariosStore";
 import { InputRespuestaParaComentario } from "./InputRespuestaParaComentario";
 
 export const ComentarioCard = ({ item }) => {
     const {respuestaActivaParaComentarioId, limpiarRespuestaActiva, setRespuestaActiva} = useRespuestasComentariosStore()
+    const {setItemSelect} = useComentariosStore()
 
     return (
         <div
@@ -47,7 +50,8 @@ export const ComentarioCard = ({ item }) => {
                     {
                         item?.respuestas_count > 0 && (
                             <button
-                            className="text-xs text-gray-500 mt-2 hover:underline">
+                            className="text-xs text-gray-500 mt-2 hover:underline cursor-pointer"
+                            onClick={() => setItemSelect(item)}>
                                 {
                                     item?.respuestas_count === 1 ? (`Ver ${item?.respuestas_count} respuesta`) : (`Ver ${item?.respuestas_count} respuestas`)
                                 }
