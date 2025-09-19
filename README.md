@@ -48,19 +48,33 @@ Divino Desmadre es una aplicación tipo red social que permite:
 ## Estructura del proyecto
 
 /
+
 ├── public/ → Archivos estáticos
+
 ├── src/
+
 │ ├── components/ → Componentes UI (cards, input, modales, etc.)
+
 │ ├── hooks/ → Hooks personalizados (formato fecha, subscripciones, etc.)
+
 │ ├── stack/ → React Query (queries/mutations de posts y comentarios)
+
 │ ├── store/ → Zustand stores (usuarios, posts, comentarios)
+
 │ ├── pages/ → Páginas principales (HomePage, etc.)
+
 │ ├── ui/ → Componentes auxiliares (spinners, botones, etc.)
+
 │ └── supabase/ → Configuración del cliente de Supabase
+
 ├── .firebaserc → Config Firebase Hosting
+
 ├── firebase.json → Config Firebase
+
 ├── vite.config.js → Configuración Vite
+
 ├── package.json → Dependencias y scripts
+
 └── README.md → Documentación
 
 ---
