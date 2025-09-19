@@ -74,7 +74,7 @@ const addEmoji = (emojiData) => {
                     <div 
                     className="flex items-center gap-3 text-black dark:text-white">
                         <img 
-                        src={item?.foto_perfil} 
+                        src={item?.foto_usuario} 
                         className="w-12 h-12 rounded-full object-cover"
                          />
                          <span
