@@ -82,8 +82,7 @@ export const InputRespuestaParaComentario = () => {
                         value={respuesta} // Usar respuesta del store
                         onChange={(e) => {
                             setRespuesta(e.target.value);
-                            setRespuesta(e.target.value);
-                        }} // Actualizar store
+                        }} // Actualizar store (removí la duplicación)
                         onKeyPress={handleKeyPress}
                         disabled={isPending}
                     />
@@ -107,20 +106,19 @@ export const InputRespuestaParaComentario = () => {
                 <section className="flex justify-end">
                     <button
                         className={`flex justify-end gap-1 px-4 py-2 rounded-full text-sm ${
-                            respuesta.trim() && !isPending
-                                ? 'text-blue-500 hover:bg-blue-50 cursor-pointer' 
-                                : 'text-gray-500 cursor-not-allowed'
+                            respuesta.trim() === "" || isPending
+                                ? "cursor-not-allowed text-gray-500"
+                                : "cursor-pointer text-[#00AEF0] hover:bg-blue-600/10"
                         }`}
                         onClick={handleEnviarRespuesta}
                         disabled={!respuesta.trim() || isPending}
                     >
                         <Icon 
-                            icon={isPending ? "mdi:loading" : "mdi:send"}
-                            width={20}
-                            height={20} 
-                            className={isPending ? "animate-spin" : ""}
+                            icon="iconamoon:send-fill"
+                            width="20"
+                            height="20" 
                         />
-                        {isPending ? "Enviando..." : "Publicar"}
+                        Publicar
                     </button>
                 </section>
             </section>
