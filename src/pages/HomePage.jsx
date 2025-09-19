@@ -65,6 +65,12 @@ export const HomePage = () => {
     ]
   });
 
+  useSupabaseSubscription({
+    channelName: "public:usuarios", 
+    options: {event: "*", schema: "public", table: "usuarios"}, 
+    queryKey: ["mostrar usuarios", "usuarios"] // Múltiples keys para invalidar
+  });
+
   return (
     <main className="flex min-h-screen bg-white dark:bg-bg-dark max-w-[1200px] mx-auto">
       {
