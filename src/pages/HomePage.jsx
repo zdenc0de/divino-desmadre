@@ -12,8 +12,11 @@ import { ComentarioModal } from "../components/HomePageComponents/ComentarioModa
 import { useComentariosStore } from "../store/ComentariosStore";
 import { useMostrarRespuestaComentariosQuery } from "../stack/RepuestasComentariosStack";
 import { FormActualizarPerfil } from "../components/Forms/FormActualizarPerfil";
+import { useUsuariosStore } from "../store/UsuariosStore";
+import { data } from "react-router-dom";
 
 export const HomePage = () => {
+  const {dataUsuarioAuth} = useUsuariosStore();
   const {stateForm, setStateForm, itemSelect} = usePostStore();
   const {data:dataPost, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading:isLoadingPost} = useMostrarPostQuery();
   const {showModal} = useComentariosStore();
@@ -64,7 +67,9 @@ export const HomePage = () => {
 
   return (
     <main className="flex min-h-screen bg-white dark:bg-bg-dark max-w-[1200px] mx-auto">
-      <FormActualizarPerfil />
+      {
+        dataUsuarioAuth?.foto_perfil === "-" && <FormActualizarPerfil />
+      }
       <Toaster position="top-left"/>
       {stateForm && <FormPost />}
       
